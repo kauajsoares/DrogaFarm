@@ -1,0 +1,13 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true, // Habilita checagens de tipo estritas
+    "skipLibCheck": true, // Pula a checagem de tipos em 'node_modules'
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true, // Não permite o tipo 'any' implícito
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  }
+}
