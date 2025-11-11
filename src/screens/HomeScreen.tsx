@@ -1,78 +1,93 @@
 import React, { useState } from 'react';
-// 1. Correção: Adicionando 'Platform' e o 'StatusBar' do react-native (com um apelido)
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TouchableOpacity, 
-  SafeAreaView, 
-  ScrollView, 
-  Switch, 
+// 1. Importações corretas (adicionamos 'Alert' para o 'else')
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+  Switch,
   Platform,
-  StatusBar as RNStatusBar // Importa o StatusBar do React Native como RNStatusBar
+  StatusBar as RNStatusBar,
+  Alert, // Precisamos do Alert
 } from 'react-native';
-// Este é o StatusBar para controlar o estilo (light/dark)
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
 
 // Importar os tipos de navegação
+import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { MainTabParamList } from '../navigation/types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { MainTabParamList, RootStackParamList } from '../navigation/types';
 
-// Vamos simular o mapa por enquanto, pois o componente real (expo-maps)
-// requer configuração de chaves de API.
 const MapPlaceholder = () => (
   <View style={styles.mapPlaceholder}>
     <Text style={styles.mapText}>Simulação de Mapa</Text>
   </View>
 );
 
-// Definir os tipos das props da tela
-type HomeScreenNavigationProp = BottomTabNavigationProp<MainTabParamList, 'Home'>;
+type HomeScreenNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<MainTabParamList, 'Home'>,
+  NativeStackNavigationProp<RootStackParamList>
+>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-// Aplicar os tipos ao componente
 export default function HomeScreen({ navigation }: Props) {
-  // Tipar o estado (o TypeScript infere 'boolean' aqui, mas podemos ser explícitos)
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
   const toggleAvailable = () => setIsAvailable(previousState => !previousState);
 
+  // 2. MUDANÇA AQUI: A função do sino agora tem a lógica
+  const handleBellPress = () => {
+    // 1. Se estiver disponível, simula uma entrega
+    if (isAvailable) {
+      const stackNavigator =
+        navigation.getParent<NativeStackNavigationProp<RootStackParamList>>();
+      if (stackNavigator) {
+        stackNavigator.navigate('NovaEntrega');
+      }
+    } else {
+      // 2. Se não estiver disponível, não faz nada
+      // (Você pode adicionar um 'else' aqui no futuro, se quiser,
+      // para navegar para a tela de Notificações)
+      console.log('Botão de sino pressionado enquanto indisponível.');
+    }
+  };
+
+  const goToPerfil = () => {
+    navigation.navigate('Perfil');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* O style "dark" funciona bem com o cabeçalho branco */}
       <StatusBar style="dark" />
-      
-      {/* Header com Status e Notificações */}
+
       <View style={styles.header}>
-        
-        {/* --- MUDANÇA AQUI --- */}
-        {/* Adicionamos um TouchableOpacity para navegar para o Perfil */}
-        <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+        <TouchableOpacity onPress={goToPerfil}>
           <View style={styles.profilePic} />
         </TouchableOpacity>
-        {/* --- FIM DA MUDANÇA --- */}
 
         <View style={styles.statusToggle}>
           <Text style={styles.statusText}>Ficar disponível</Text>
           <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isAvailable ? "#007AFF" : "#f4f3f4"}
+            trackColor={{ false: '#767577', true: '#81b0ff' }}
+            thumbColor={isAvailable ? '#007AFF' : '#f4f3f4'}
             onValueChange={toggleAvailable}
             value={isAvailable}
           />
         </View>
-        <TouchableOpacity>
+
+        {/* 3. O Sino agora usa a nova função 'handleBellPress' */}
+        <TouchableOpacity onPress={handleBellPress}>
           <Feather name="bell" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
-      {/* Simulação do Mapa */}
       <MapPlaceholder />
 
-      {/* Conteúdo rolável */}
       <ScrollView style={styles.contentArea}>
         <Text style={styles.sectionTitle}>Novidades</Text>
         <View style={styles.newsCard} />
@@ -95,18 +110,16 @@ export default function HomeScreen({ navigation }: Props) {
   );
 }
 
-// Os estilos permanecem os mesmos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4F4F4', // Um cinza claro de fundo
+    backgroundColor: '#F4F4F4',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    // 2. Correção: Usando o RNStatusBar.currentHeight
     paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight : 10,
     paddingBottom: 10,
     backgroundColor: '#FFF',
@@ -166,10 +179,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 15,
     padding: 20,
-    width: '48%', // Quase metade da tela
+    width: '48%', 
     minHeight: 120,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2, },
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
@@ -187,6 +200,5 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     fontSize: 12,
     color: '#888',
-  }
+  },
 });
-
