@@ -2,14 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons'; // Para o ícone de sucesso
-
-// 1. Importar os tipos de navegação
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList, MainTabParamList } from '../navigation/types';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
-// 2. Definir os tipos das props (igual ao PerfilScreen, para controlar o 'pai')
 type RotaConcluidaNavigationProp = CompositeNavigationProp<
   NativeStackNavigationProp<RootStackParamList, 'RotaConcluida'>,
   BottomTabNavigationProp<MainTabParamList>
@@ -19,14 +16,10 @@ type Props = {
   navigation: RotaConcluidaNavigationProp;
 };
 
-// 3. Componente principal
+
 export default function RotaConcluidaScreen({ navigation }: Props) {
 
   const handleContinuar = () => {
-    // 4. Lógica para voltar para a Home
-    // Esta lógica 'reseta' a navegação para que o usuário
-    // volte para a tela 'MainApp' (o dashboard) e não possa
-    // apertar "voltar" e cair de novo no fluxo da entrega.
     navigation.reset({
       index: 0,
       routes: [{ name: 'MainApp' }],
@@ -38,7 +31,6 @@ export default function RotaConcluidaScreen({ navigation }: Props) {
       <StatusBar style="dark" />
       <View style={styles.content}>
         
-        {/* Ícone de Sucesso */}
         <Feather name="check-circle" size={80} color="#4CAF50" />
         
         <Text style={styles.title}>Oba, mais uma rota concluída!</Text>
@@ -48,7 +40,6 @@ export default function RotaConcluidaScreen({ navigation }: Props) {
 
       </View>
 
-      {/* Botão de Ação na parte inferior */}
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.actionButton} onPress={handleContinuar}>
           <Text style={styles.actionButtonText}>Continuar</Text>
@@ -58,7 +49,7 @@ export default function RotaConcluidaScreen({ navigation }: Props) {
   );
 }
 
-// 5. Estilos
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
