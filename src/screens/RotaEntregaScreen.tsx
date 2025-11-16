@@ -1,27 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-
-// 1. Importar os tipos de navegação
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
 type RotaEntregaNavigationProp = NativeStackNavigationProp<RootStackParamList, 'RotaEntrega'>;
 
 type Props = {
   navigation: RotaEntregaNavigationProp;
 };
 
-// 3. Componente principal da tela
 export default function RotaEntregaScreen({ navigation }: Props) {
 
   const handleOpenMap = () => {
     const address = "Endereço do Cliente, 456"; // Endereço do cliente
     Linking.openURL(`https://maps.google.com/?q=${address}`);
   };
-
-  // 4. MUDANÇA AQUI: Navega para a tela de "Confirmar Entrega"
   const handleChegueiNaEntrega = () => {
     navigation.navigate('ConfirmarEntrega'); 
   };
@@ -29,8 +23,6 @@ export default function RotaEntregaScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        
-        {/* Card do Cliente */}
         <View style={styles.card}>
           <View style={styles.cardContent}>
             <Text style={styles.title}>Nome do cliente</Text>
@@ -64,7 +56,6 @@ export default function RotaEntregaScreen({ navigation }: Props) {
   );
 }
 
-// 5. Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -46,7 +46,7 @@ export default function WelcomeScreen({ navigation }: Props) {
   );
 }
 
-// Os estilos são os mesmos, o TypeScript os entende perfeitamente
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
