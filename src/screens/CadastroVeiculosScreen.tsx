@@ -8,58 +8,54 @@ import {
   SafeAreaView, 
   ScrollView, 
   Platform, 
-  KeyboardAvoidingView 
+  KeyboardAvoidingView,
+  Alert
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-
-// Ícone para os botões de upload (requer @expo/vector-icons)
 import { Feather } from '@expo/vector-icons'; 
-
-// 1. Importar os tipos de navegação
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types'; // O arquivo que criamos
+import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
+
 type CadastroVeiculoScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'CadastroVeiculo'>;
 
 type Props = {
   navigation: CadastroVeiculoScreenNavigationProp;
 };
 
-// 3. Tipar o tipo de veículo (string literal)
-type VehicleType = 'bicicleta' | 'moto';
-// 4. Tipar o tipo de documento (string literal)
-type DocType = 'CNH' | 'Rosto';
 
-// 5. Aplicar os tipos ao componente
+type VehicleType = 'bicicleta' | 'moto';
+type DocType = 'Carteira de Identidade' | 'CNH' | 'Rosto';
+
 export default function CadastroVeiculoScreen({ navigation }: Props) {
-  // 6. Tipar as variáveis de estado
-  const [vehicleType, setVehicleType] = useState<VehicleType | null>(null); // 'bicicleta' ou 'moto'
+  const [vehicleType, setVehicleType] = useState<VehicleType>('bicicleta'); 
   
   const [banco, setBanco] = useState<string>('');
   const [agencia, setAgencia] = useState<string>('');
   const [conta, setConta] = useState<string>('');
   const [digito, setDigito] = useState<string>('');
 
-  // 7. Tipar os parâmetros das funções
   const handleSelectVehicle = (type: VehicleType) => {
     setVehicleType(type);
   };
 
   const handleUploadDoc = (docType: DocType) => {
-    // Aqui você adicionaria a lógica para abrir a câmera ou galeria
-    // (Usando, por exemplo, a biblioteca 'expo-image-picker')
     alert(`Lógica para upload de ${docType} não implementada.`);
   };
 
   const handleFinalConfirm = () => {
-    // Aqui você salvaria todos os dados (pessoais, veículo, docs, banco)
+    if (!vehicleType) {
+      Alert.alert('Erro', 'Por favor, selecione seu tipo de veículo.');
+      return;
+    }
+    if (!banco || !agencia || !conta || !digito) {
+      Alert.alert('Erro', 'Por favor, preencha todos os seus dados bancários.');
+      return;
+    }
+
     console.log('Dados Finais:', { vehicleType, banco, agencia, conta, digito });
     alert('Cadastro concluído com sucesso!');
     
-    // MUDANÇA AQUI: Após confirmar tudo, o usuário é levado
-    // para o "MainApp" (o Tab Navigator).
-    // Usamos 'reset' para impedir que ele volte para as telas de cadastro.
     navigation.reset({
       index: 0,
       routes: [{ name: 'MainApp' }],
@@ -82,7 +78,6 @@ export default function CadastroVeiculoScreen({ navigation }: Props) {
               style={[styles.vehicleOption, vehicleType === 'bicicleta' && styles.vehicleOptionSelected]}
               onPress={() => handleSelectVehicle('bicicleta')}
             >
-              {/* <Feather name="bicycle" size={40} color={vehicleType === 'bicicleta' ? '#FFF' : '#000'} /> */}
               <Text style={[styles.vehicleText, vehicleType === 'bicicleta' && styles.vehicleTextSelected]}>Bicicleta</Text>
             </TouchableOpacity>
             
@@ -90,7 +85,6 @@ export default function CadastroVeiculoScreen({ navigation }: Props) {
               style={[styles.vehicleOption, vehicleType === 'moto' && styles.vehicleOptionSelected]}
               onPress={() => handleSelectVehicle('moto')}
             >
-              {/* <Feather name="truck" size={40} color={vehicleType === 'moto' ? '#FFF' : '#000'} /> */}
               <Text style={[styles.vehicleText, vehicleType === 'moto' && styles.vehicleTextSelected]}>Moto</Text>
             </TouchableOpacity>
           </View>
@@ -98,10 +92,22 @@ export default function CadastroVeiculoScreen({ navigation }: Props) {
           {/* Documentos */}
           <Text style={styles.sectionTitle}>Fotos e documentos</Text>
           <View style={styles.docsSection}>
-            <TouchableOpacity style={styles.docOption} onPress={() => handleUploadDoc('CNH')}>
+            
+            {/* 3. MUDANÇA AQUI: Botão de Documento agora é dinâmico */}
+            <TouchableOpacity 
+              style={styles.docOption} 
+              onPress={() => handleUploadDoc(
+                vehicleType === 'moto' ? 'CNH' : 'Carteira de Identidade'
+              )}
+            >
               <Feather name="camera" size={24} color="#555" />
-              <Text style={styles.docText}>Foto CNH</Text>
+              <Text style={styles.docText}>
+                {vehicleType === 'moto' 
+                  ? 'Foto da CNH' 
+                  : 'Foto da Carteira de Identidade'}
+              </Text>
             </TouchableOpacity>
+
             <TouchableOpacity style={styles.docOption} onPress={() => handleUploadDoc('Rosto')}>
               <Feather name="camera" size={24} color="#555" />
               <Text style={styles.docText}>Foto do rosto</Text>
@@ -135,7 +141,7 @@ export default function CadastroVeiculoScreen({ navigation }: Props) {
               style={[styles.input, styles.digitoInput]}
               placeholder="Dígito"
               keyboardType="numeric"
-              maxLength={1}
+              maxLength={2}
               value={digito}
               onChangeText={setDigito}
             />
@@ -151,11 +157,11 @@ export default function CadastroVeiculoScreen({ navigation }: Props) {
   );
 }
 
-// 8. Os estilos permanecem os mesmos
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF', // Fundo branco
+    backgroundColor: '#FFFFFF', 
   },
   scrollContent: {
     padding: 25,
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
     borderColor: '#E0E0E0',
   },
   vehicleOptionSelected: {
-    backgroundColor: '#007AFF', // Azul
+    backgroundColor: '#007AFF', 
     borderColor: '#007AFF',
   },
   vehicleText: {
@@ -219,11 +225,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 2,
     borderColor: '#E0E0E0',
+    padding: 5, // Adiciona padding para o texto
   },
   docText: {
     fontSize: 14,
     color: '#555',
     marginTop: 5,
+    // 4. MUDANÇA AQUI: Centraliza o texto
+    textAlign: 'center', 
   },
   input: {
     width: '100%',
@@ -240,10 +249,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   contaInput: {
-    flex: 0.7, // 70% da largura
+    flex: 0.7, 
   },
   digitoInput: {
-    flex: 0.25, // 25% da largura
+    flex: 0.25, 
   },
   confirmButton: {
     width: '100%',

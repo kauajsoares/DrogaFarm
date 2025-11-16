@@ -4,15 +4,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types'; // (Vamos criar este arquivo)
 
-// 1. Definimos o tipo das props que o componente recebe
-// O 'navigation' agora é tipado com base na nossa pilha de navegação
 type WelcomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Welcome'>;
 
 type Props = {
   navigation: WelcomeScreenNavigationProp;
 };
 
-// 2. Aplicamos o tipo 'Props' ao componente
+
 export default function WelcomeScreen({ navigation }: Props) {
   
   // Função para navegar para a tela de Login
@@ -20,20 +18,16 @@ export default function WelcomeScreen({ navigation }: Props) {
     navigation.navigate('Login');
   };
 
-  // Função para navegar para a tela de Cadastro
   const handleCadastroPress = () => {
     navigation.navigate('Cadastro');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Deixamos a status bar escura para contrastar com o fundo claro */}
       <StatusBar barStyle="dark-content" />
-
-      {/* Parte de CIMA (Azul) */}
       <View style={styles.topSection}>
         <MaterialCommunityIcons name="racing-helmet" size={120} color="black" />
-        <Text style={styles.title}>DrogaFarm para Entregadores</Text>
+        <Text style={styles.title}>DrogaFarm {"\n"}para Entregadores</Text>
       </View>
 
       {/* Parte de BAIXO (Branca) */}
@@ -56,7 +50,7 @@ export default function WelcomeScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00FFFF', // Cor de fundo Ciano/Azul
+    backgroundColor: '#00ffffff', // Cor de fundo Ciano/Azul
   },
   topSection: {
     flex: 0.6,

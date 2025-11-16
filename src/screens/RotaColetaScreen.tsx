@@ -2,23 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons'; // Para o ícone de "Mapa"
 
-// 1. Importar os tipos de navegação
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
+
 type RotaColetaNavigationProp = NativeStackNavigationProp<RootStackParamList, 'RotaColeta'>;
 
 type Props = {
   navigation: RotaColetaNavigationProp;
 };
 
-// 3. Componente principal da tela
 export default function RotaColetaScreen({ navigation }: Props) {
 
   // Função para abrir o mapa (ex: Google Maps)
   const handleOpenMap = () => {
-    // No futuro, você usaria o endereço real aqui
+    // No futuro, usaria o endereço real aqui
     const address = "Endereço da Farmácia, 123";
     Linking.openURL(`https://maps.google.com/?q=${address}`);
   };
@@ -36,7 +34,7 @@ export default function RotaColetaScreen({ navigation }: Props) {
         {/* Card da Farmácia */}
         <View style={styles.card}>
           <View style={styles.cardContent}>
-            <Text style={styles.title}>Nome do farmácia</Text>
+            <Text style={styles.title}>Nome da farmácia</Text>
             <Text style={styles.subtitle}>Endereço completo</Text>
           </View>
           <TouchableOpacity style={styles.mapButton} onPress={handleOpenMap}>
@@ -45,11 +43,10 @@ export default function RotaColetaScreen({ navigation }: Props) {
           </TouchableOpacity>
         </View>
 
-        {/* Card de Status (COM A CORREÇÃO DA QUEBRA DE LINHA) */}
+        {/* Card de Status*/}
         <View style={styles.card}>
           <View style={styles.cardContent}>
             <Text style={styles.title}>Você está indo para a coleta</Text>
-            {/* A quebra de linha {"\n"} está DENTRO do componente <Text> */}
             <Text style={styles.subtitle}>Previsão de chegada:{"\n"}14:13</Text>
           </View>
         </View>
@@ -66,7 +63,6 @@ export default function RotaColetaScreen({ navigation }: Props) {
   );
 }
 
-// 4. Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,

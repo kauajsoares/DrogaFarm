@@ -3,18 +3,17 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-na
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
 
-// 1. Importar os tipos de navegação
+
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
 type NotificacoesScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Notificacoes'>;
 
 type Props = {
   navigation: NotificacoesScreenNavigationProp;
 };
 
-// 3. Componente da tela
+
 export default function NotificacoesScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +25,7 @@ export default function NotificacoesScreen({ navigation }: Props) {
           <Feather name="chevron-left" size={28} color="black" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notificações</Text>
-        <View style={{ width: 40 }} /> {/* Espaçador para centralizar o título */}
+        <View style={{ width: 40 }} /> 
       </View>
 
       {/* Conteúdo da Tela */}

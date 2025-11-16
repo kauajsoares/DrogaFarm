@@ -6,20 +6,22 @@ import { View } from 'react-native';
 // 1. Importar os tipos que definimos
 import { RootStackParamList } from './src/navigation/types';
 
-// 2. Importe as telas .tsx (sem as extensões .tsx)
+// 2. Importe as telas .tsx
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import CadastroScreen from './src/screens/CadastroScreen';
-import CadastroVeiculoScreen from './src/screens/CadastroVeiculosScreen'; 
+import CadastroVeiculosScreen from './src/screens/CadastroVeiculosScreen'; // Com 's'
 import NovaEntregaScreen from './src/screens/NovaEntregaScreen';
 import NotificacoesScreen from './src/screens/NotificacoesScreen';
 import RotaColetaScreen from './src/screens/RotaColetaScreen'; 
 import ConfirmarColetaScreen from './src/screens/ConfirmarColetaScreen';
 import RotaEntregaScreen from './src/screens/RotaEntregaScreen';
 import ConfirmarEntregaScreen from './src/screens/ConfirmarEntregaScreen';
-
-// 3. MUDANÇA AQUI: Importamos a tela RotaConcluida real
 import RotaConcluidaScreen from './src/screens/RotaConcluidaScreen';
+import DadosCadastroScreen from './src/screens/DadosCadastroScreen';
+
+// 3. MUDANÇA AQUI: Importamos a tela real
+import ContatoEmergenciaScreen from './src/screens/ContatoEmergenciaScreen';
 
 // 4. Importe o seu Navegador de Abas
 import MainTabNavigator from './src/navigation/MainTabNavigator';
@@ -27,7 +29,7 @@ import MainTabNavigator from './src/navigation/MainTabNavigator';
 // 5. Crie o Stack Navigator com os tipos
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-// 6. REMOVEMOS o placeholder para 'RotaConcluidaScreen'
+// 6. MUDANÇA AQUI: Removemos o placeholder de 'ContatoEmergencia'
 
 export default function App() {
   return (
@@ -53,7 +55,7 @@ export default function App() {
           />
           <Stack.Screen 
             name="CadastroVeiculo" 
-            component={CadastroVeiculoScreen} 
+            component={CadastroVeiculosScreen} // Com 's'
             options={{ title: 'Complete seu Cadastro' }}
           />
           <Stack.Screen 
@@ -90,12 +92,25 @@ export default function App() {
             options={{ title: "Confirmar Entrega" }}
           />
 
-          {/* MUDANÇA AQUI: Usamos o componente real */}
           <Stack.Screen
             name="RotaConcluida"
             component={RotaConcluidaScreen}
-            options={{ headerShown: false }} // Tela de sucesso não precisa de header
+            options={{ headerShown: false }} 
           />
+          
+          <Stack.Screen
+            name="DadosCadastro"
+            component={DadosCadastroScreen}
+            options={{ headerShown: false }} // O cabeçalho é personalizado
+          />
+          
+          {/* 7. MUDANÇA AQUI: Usamos o componente real */}
+          <Stack.Screen
+            name="ContatoEmergencia"
+            component={ContatoEmergenciaScreen}
+            options={{ headerShown: false }} // O cabeçalho é personalizado
+          />
+
         </Stack.Group>
 
         {/* Agrupamos as telas Modais */}

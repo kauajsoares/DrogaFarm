@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
-
-// 1. Importar os tipos de navegação
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
 type ConfirmarEntregaNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ConfirmarEntrega'>;
 
 type Props = {
   navigation: ConfirmarEntregaNavigationProp;
 };
 
-// 3. Componente principal
 export default function ConfirmarEntregaScreen({ navigation }: Props) {
   const [code, setCode] = useState('');
 
   const handleConcluirEntrega = () => {
     console.log('Código de entrega inserido:', code);
-    // Navega para a tela final
+
     navigation.navigate('RotaConcluida'); 
   };
 
@@ -30,7 +26,6 @@ export default function ConfirmarEntregaScreen({ navigation }: Props) {
           Informe o código de entrega fornecido pelo cliente
         </Text>
 
-        {/* Card de Informações */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Pedido Nº x</Text>
           
@@ -50,7 +45,6 @@ export default function ConfirmarEntregaScreen({ navigation }: Props) {
           </View>
         </View>
 
-        {/* Campo de Input de Código */}
         <TextInput
           style={styles.codeInput}
           placeholder="____"
@@ -64,9 +58,7 @@ export default function ConfirmarEntregaScreen({ navigation }: Props) {
 
       </View>
 
-      {/* Botão de Ação na parte inferior */}
       <View style={styles.bottomButtonContainer}>
-        {/* O protótipo diz "Concluir coleta", mas corrigimos para "Concluir entrega" */}
         <TouchableOpacity style={styles.actionButton} onPress={handleConcluirEntrega}>
           <Text style={styles.actionButtonText}>Concluir entrega</Text>
         </TouchableOpacity>
@@ -75,7 +67,6 @@ export default function ConfirmarEntregaScreen({ navigation }: Props) {
   );
 }
 
-// 4. Estilos (reutilizados da tela ConfirmarColeta)
 const styles = StyleSheet.create({
   container: {
     flex: 1,

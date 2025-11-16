@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
-
-// 1. Importar os tipos de navegação
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
+
+
 type ConfirmarColetaNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ConfirmarColeta'>;
 
 type Props = {
   navigation: ConfirmarColetaNavigationProp;
 };
 
-// 3. Componente principal
 export default function ConfirmarColetaScreen({ navigation }: Props) {
   const [code, setCode] = useState('');
-
-  // 4. MUDANÇA AQUI: Navega para a tela de "Indo para a Entrega"
   const handleConcluirColeta = () => {
     console.log('Código inserido:', code);
     navigation.navigate('RotaEntrega'); 
@@ -30,7 +26,6 @@ export default function ConfirmarColetaScreen({ navigation }: Props) {
           Informe para a loja o código de coleta ou o nome do cliente
         </Text>
 
-        {/* Card de Informações */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Pedido Nº x</Text>
           

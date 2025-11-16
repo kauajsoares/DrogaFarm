@@ -1,29 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 
-// 1. Importar os tipos de navegação
+
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 
-// 2. Definir os tipos das props
 type NovaEntregaNavigationProp = NativeStackNavigationProp<RootStackParamList, 'NovaEntrega'>;
 
 type Props = {
   navigation: NovaEntregaNavigationProp;
 };
-
-// 3. Componente principal da tela
 export default function NovaEntregaScreen({ navigation }: Props) {
 
-  // Funções para os botões
+
   const handleAceitar = () => {
-    // No futuro, isso navegará para a tela de rota
-    // Por enquanto, vamos navegar para a RotaColeta (que adicionaremos no App.tsx)
-    navigation.replace('RotaColeta'); // 'replace' impede o usuário de voltar para esta tela
+    navigation.replace('RotaColeta'); 
   };
 
   const handleRecusar = () => {
-    // Simplesmente fecha a tela modal e volta para a Home
     navigation.goBack();
   };
 
@@ -86,7 +80,6 @@ export default function NovaEntregaScreen({ navigation }: Props) {
   );
 }
 
-// 4. Estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,

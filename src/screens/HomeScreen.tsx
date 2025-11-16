@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// 1. Importações corretas (adicionamos 'Alert' para o 'else')
 import {
   StyleSheet,
   Text,
@@ -10,12 +9,11 @@ import {
   Switch,
   Platform,
   StatusBar as RNStatusBar,
-  Alert, // Precisamos do Alert
+  Alert, 
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
 
-// Importar os tipos de navegação
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -40,9 +38,8 @@ export default function HomeScreen({ navigation }: Props) {
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
   const toggleAvailable = () => setIsAvailable(previousState => !previousState);
 
-  // 2. MUDANÇA AQUI: A função do sino agora tem a lógica
+
   const handleBellPress = () => {
-    // 1. Se estiver disponível, simula uma entrega
     if (isAvailable) {
       const stackNavigator =
         navigation.getParent<NativeStackNavigationProp<RootStackParamList>>();
@@ -50,9 +47,6 @@ export default function HomeScreen({ navigation }: Props) {
         stackNavigator.navigate('NovaEntrega');
       }
     } else {
-      // 2. Se não estiver disponível, não faz nada
-      // (Você pode adicionar um 'else' aqui no futuro, se quiser,
-      // para navegar para a tela de Notificações)
       console.log('Botão de sino pressionado enquanto indisponível.');
     }
   };
@@ -80,7 +74,6 @@ export default function HomeScreen({ navigation }: Props) {
           />
         </View>
 
-        {/* 3. O Sino agora usa a nova função 'handleBellPress' */}
         <TouchableOpacity onPress={handleBellPress}>
           <Feather name="bell" size={24} color="black" />
         </TouchableOpacity>

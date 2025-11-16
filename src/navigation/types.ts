@@ -26,5 +26,9 @@ export type RootStackParamList = {
   ConfirmarColeta: undefined; 
   RotaEntrega: undefined;
   ConfirmarEntrega: undefined; 
-  RotaConcluida: undefined; // A tela final do fluxo
+  RotaConcluida: undefined;
+
+  // MUDANÇA AQUI: Novas telas do Perfil
+  DadosCadastro: undefined;
+  ContatoEmergencia: undefined;
 };

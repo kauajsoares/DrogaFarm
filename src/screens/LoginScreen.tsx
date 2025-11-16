@@ -11,29 +11,25 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-// 1. Importar os tipos de navegação
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types'; // O arquivo que criamos
+import { RootStackParamList } from '../navigation/types'; 
 
-// 2. Definir os tipos das props
+
 type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 type Props = {
   navigation: LoginScreenNavigationProp;
 };
 
-// 3. Aplicar os tipos ao componente
+
 export default function LoginScreen({ navigation }: Props) {
-  // 4. Tipar as variáveis de estado
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   const handleLogin = () => {
-    // Aqui você adicionaria a lógica de autenticação
+
     console.log('Tentando logar com:', email, password);
 
-    // Lógica correta: Navega para o app principal e limpa a pilha
-    // (Impede o usuário de voltar para o Login)
     navigation.reset({
       index: 0,
       routes: [{ name: 'MainApp' }],
@@ -43,13 +39,11 @@ export default function LoginScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-      
-      {/* Parte de Cima (Azul/Gradiente) */}
+
       <View style={styles.topSection}>
         <Text style={styles.title}>Login</Text>
       </View>
 
-      {/* Usamos KeyboardAvoidingView para evitar que o teclado cubra os inputs */}
       <KeyboardAvoidingView 
         style={styles.bottomSection}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -84,14 +78,13 @@ export default function LoginScreen({ navigation }: Props) {
   );
 }
 
-// 5. Os estilos permanecem os mesmos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#00FFFF', // Cor de fundo Ciano
   },
   topSection: {
-    flex: 0.4, // Ocupa 40% da tela para o cabeçalho
+    flex: 0.4, 
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#00FFFF', // Começa com ciano
